@@ -13,5 +13,5 @@ use Illuminate\Support\Facades\Route;
 |
 */
 Route::prefix('/')->group(function () {
-    Route::get('/{any}', 'App\Http\Controllers\HomeController@index')->where('any', '.*');
+    Route::get('/{any}', 'HomeController@index')->where('any', '.*');
 });
