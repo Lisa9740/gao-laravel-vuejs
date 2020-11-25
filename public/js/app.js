@@ -1899,6 +1899,186 @@ module.exports = {
 
 /***/ }),
 
+/***/ "./node_modules/babel-loader/lib/index.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/add-attribution.vue?vue&type=script&lang=js&":
+/*!**************************************************************************************************************************************************************************!*\
+  !*** ./node_modules/babel-loader/lib??ref--4-0!./node_modules/vue-loader/lib??vue-loader-options!./resources/js/components/add-attribution.vue?vue&type=script&lang=js& ***!
+  \**************************************************************************************************************************************************************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var axios__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! axios */ "./node_modules/axios/index.js");
+/* harmony import */ var axios__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(axios__WEBPACK_IMPORTED_MODULE_0__);
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+
+/* harmony default export */ __webpack_exports__["default"] = ({
+  props: ['hourAttr', 'computerAttr'],
+  data: function data() {
+    return {
+      dialog: false,
+      customers: [],
+      computer: null,
+      name: '',
+      hour: null,
+      search: '',
+      isSearching: false
+    };
+  },
+  watch: {
+    search: function search(val) {
+      var _this = this;
+
+      if (val && val.length >= 3) {
+        this.isSearching = true;
+        axios__WEBPACK_IMPORTED_MODULE_0___default.a.get('/api/customer/search', {
+          params: {
+            query: val
+          }
+        }).then(function (response) {
+          _this.customers = response.data.data;
+        });
+        console.log("customer", this.customers);
+      }
+    }
+  },
+  methods: {// attribute: function (computer, hour) {
+    //    this.computer = computer
+    //     this.hour = hour
+    //     console.log(computer, hour)
+    // }
+  }
+});
+
+/***/ }),
+
+/***/ "./node_modules/babel-loader/lib/index.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/datepicker.vue?vue&type=script&lang=js&":
+/*!*********************************************************************************************************************************************************************!*\
+  !*** ./node_modules/babel-loader/lib??ref--4-0!./node_modules/vue-loader/lib??vue-loader-options!./resources/js/components/datepicker.vue?vue&type=script&lang=js& ***!
+  \*********************************************************************************************************************************************************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+/* harmony default export */ __webpack_exports__["default"] = ({
+  data: function data() {
+    return {
+      date: new Date().toISOString().substr(0, 10),
+      menu: false
+    };
+  }
+});
+
+/***/ }),
+
 /***/ "./node_modules/babel-loader/lib/index.js?!./resources/js/components/add-computer.js?vue&type=script&lang=js&":
 /*!********************************************************************************************************************!*\
   !*** ./node_modules/babel-loader/lib??ref--4-0!./resources/js/components/add-computer.js?vue&type=script&lang=js& ***!
@@ -1945,13 +2125,60 @@ __webpack_require__.r(__webpack_exports__);
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
+/* harmony import */ var axios__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! axios */ "./node_modules/axios/index.js");
+/* harmony import */ var axios__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(axios__WEBPACK_IMPORTED_MODULE_0__);
+/* harmony import */ var _add_attribution_vue__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./add-attribution.vue */ "./resources/js/components/add-attribution.vue");
+
+
 /* harmony default export */ __webpack_exports__["default"] = ({
+  components: {
+    AddAttribution: _add_attribution_vue__WEBPACK_IMPORTED_MODULE_1__["default"]
+  },
   props: {
     computer: {
       "default": function _default() {
         return {};
       }
     }
+  },
+  data: function data() {
+    return {
+      hours: [],
+      attributions: [],
+      attrComputer: '',
+      attrHour: ''
+    };
+  },
+  methods: {
+    sendInfo: function sendInfo(computer, hour) {
+      this.attrComputer = computer;
+      this.attrhour = hour;
+    },
+    initialize: function initialize() {
+      var _this = this;
+
+      axios__WEBPACK_IMPORTED_MODULE_0___default.a.get('/api/attributions').then(function (response) {
+        var response_data = response.data.data;
+        response_data.forEach(function (data) {
+          _this.attributions.push({
+            'computer': data.computer,
+            'hour': data.hour,
+            'name': data.customer_id.firstname + ' ' + data.customer_id.lastname,
+            'date': data.date
+          });
+        });
+      });
+      console.log(this.attributions);
+    },
+    displayHours: function displayHours() {
+      for (var i = 8; i < 19; i++) {
+        this.hours.push(i);
+      }
+    }
+  },
+  created: function created() {
+    this.initialize();
+    this.displayHours();
   }
 });
 
@@ -1970,13 +2197,18 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var axios__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(axios__WEBPACK_IMPORTED_MODULE_0__);
 /* harmony import */ var _computer_vue__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./computer.vue */ "./resources/js/components/computer.vue");
 /* harmony import */ var _add_computer_vue__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./add-computer.vue */ "./resources/js/components/add-computer.vue");
+/* harmony import */ var _datepicker_vue__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ./datepicker.vue */ "./resources/js/components/datepicker.vue");
+/* harmony import */ var _add_attribution__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ./add-attribution */ "./resources/js/components/add-attribution.vue");
+
+
 
 
 
 /* harmony default export */ __webpack_exports__["default"] = ({
   components: {
     Computer: _computer_vue__WEBPACK_IMPORTED_MODULE_1__["default"],
-    AddComputer: _add_computer_vue__WEBPACK_IMPORTED_MODULE_2__["default"]
+    AddComputer: _add_computer_vue__WEBPACK_IMPORTED_MODULE_2__["default"],
+    DatePicker: _datepicker_vue__WEBPACK_IMPORTED_MODULE_3__["default"]
   },
   data: function data() {
     return {
@@ -1999,11 +2231,8 @@ __webpack_require__.r(__webpack_exports__);
       var _this = this;
 
       axios__WEBPACK_IMPORTED_MODULE_0___default.a.get('/api/computers').then(function (response) {
-        console.log(response.data); // this.computer = response.data
-
-        response.data.forEach(function (_data) {
-          _this.computers.push(_data);
-        });
+        console.log(response.data);
+        _this.computers = response.data;
       });
     }
   },
@@ -38302,6 +38531,164 @@ exports.clearImmediate = (typeof self !== "undefined" && self.clearImmediate) ||
 
 /***/ }),
 
+/***/ "./node_modules/vue-loader/lib/loaders/templateLoader.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/add-attribution.vue?vue&type=template&id=0aaf9458&":
+/*!******************************************************************************************************************************************************************************************************************!*\
+  !*** ./node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!./node_modules/vue-loader/lib??vue-loader-options!./resources/js/components/add-attribution.vue?vue&type=template&id=0aaf9458& ***!
+  \******************************************************************************************************************************************************************************************************************/
+/*! exports provided: render, staticRenderFns */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "render", function() { return render; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "staticRenderFns", function() { return staticRenderFns; });
+var render = function() {
+  var _vm = this
+  var _h = _vm.$createElement
+  var _c = _vm._self._c || _h
+  return _c(
+    "v-row",
+    { attrs: { justify: "center" } },
+    [
+      _c(
+        "v-dialog",
+        {
+          attrs: { persistent: "", "max-width": "290" },
+          scopedSlots: _vm._u([
+            {
+              key: "activator",
+              fn: function(ref) {
+                var on = ref.on
+                var attrs = ref.attrs
+                return [
+                  _c(
+                    "v-btn",
+                    _vm._g(
+                      _vm._b(
+                        { attrs: { color: "primary", dark: "" } },
+                        "v-btn",
+                        attrs,
+                        false
+                      ),
+                      on
+                    ),
+                    [_vm._v("\n                +\n            ")]
+                  )
+                ]
+              }
+            }
+          ]),
+          model: {
+            value: _vm.dialog,
+            callback: function($$v) {
+              _vm.dialog = $$v
+            },
+            expression: "dialog"
+          }
+        },
+        [
+          _vm._v(" "),
+          _c(
+            "v-card",
+            [
+              _c("v-card-title", { staticClass: "headline" }, [
+                _vm._v("\n             Ajouter Attribution\n            ")
+              ]),
+              _vm._v(" "),
+              _c(
+                "v-card-text",
+                [
+                  _vm._v(
+                    "\n                " +
+                      _vm._s(_vm.hourAttr) +
+                      " " +
+                      _vm._s(_vm.computerAttr) +
+                      "\n                "
+                  ),
+                  _c("label", { attrs: { for: "name" } }, [
+                    _vm._v("Nom de l'utilisateur")
+                  ]),
+                  _vm._v(" "),
+                  _c("v-autocomplete", {
+                    attrs: {
+                      items: _vm.customers,
+                      "item-text": "name",
+                      "search-input": _vm.search,
+                      dense: "",
+                      filled: "",
+                      rounded: "",
+                      "return-object": ""
+                    },
+                    on: {
+                      "update:searchInput": function($event) {
+                        _vm.search = $event
+                      },
+                      "update:search-input": function($event) {
+                        _vm.search = $event
+                      }
+                    },
+                    model: {
+                      value: _vm.name,
+                      callback: function($$v) {
+                        _vm.name = $$v
+                      },
+                      expression: "name"
+                    }
+                  })
+                ],
+                1
+              ),
+              _vm._v(" "),
+              _c(
+                "v-card-actions",
+                [
+                  _c("v-spacer"),
+                  _vm._v(" "),
+                  _c(
+                    "v-btn",
+                    {
+                      attrs: { color: "green darken-1", text: "" },
+                      on: {
+                        click: function($event) {
+                          _vm.dialog = false
+                        }
+                      }
+                    },
+                    [_vm._v("\n                    Annuler\n                ")]
+                  ),
+                  _vm._v(" "),
+                  _c(
+                    "v-btn",
+                    {
+                      attrs: { color: "green darken-1", text: "" },
+                      on: {
+                        click: function($event) {
+                          _vm.dialog = false
+                        }
+                      }
+                    },
+                    [_vm._v("Ajouter\n                ")]
+                  )
+                ],
+                1
+              )
+            ],
+            1
+          )
+        ],
+        1
+      )
+    ],
+    1
+  )
+}
+var staticRenderFns = []
+render._withStripped = true
+
+
+
+/***/ }),
+
 /***/ "./node_modules/vue-loader/lib/loaders/templateLoader.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/add-computer.vue?vue&type=template&id=3479b9dc&":
 /*!***************************************************************************************************************************************************************************************************************!*\
   !*** ./node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!./node_modules/vue-loader/lib??vue-loader-options!./resources/js/components/add-computer.vue?vue&type=template&id=3479b9dc& ***!
@@ -38428,8 +38815,194 @@ var render = function() {
       _vm._v("\n        " + _vm._s(_vm.computer.name) + "\n    ")
     ]),
     _vm._v(" "),
-    _c("div", { staticClass: "card-body" })
+    _c(
+      "div",
+      { staticClass: "card-body" },
+      _vm._l(_vm.hours, function(hour) {
+        return _c(
+          "div",
+          [
+            _c(
+              "v-row",
+              [
+                _c("v-col", [
+                  _vm._v(
+                    "\n                       " +
+                      _vm._s(hour) +
+                      " h\n               "
+                  )
+                ]),
+                _vm._v(" "),
+                _c("v-col"),
+                _vm._v(" "),
+                _c(
+                  "v-col",
+                  [
+                    _c("AddAttribution", {
+                      attrs: { hourAttr: hour, computerAttr: _vm.computer }
+                    })
+                  ],
+                  1
+                )
+              ],
+              1
+            )
+          ],
+          1
+        )
+      }),
+      0
+    )
   ])
+}
+var staticRenderFns = []
+render._withStripped = true
+
+
+
+/***/ }),
+
+/***/ "./node_modules/vue-loader/lib/loaders/templateLoader.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/datepicker.vue?vue&type=template&id=47a6a047&":
+/*!*************************************************************************************************************************************************************************************************************!*\
+  !*** ./node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!./node_modules/vue-loader/lib??vue-loader-options!./resources/js/components/datepicker.vue?vue&type=template&id=47a6a047& ***!
+  \*************************************************************************************************************************************************************************************************************/
+/*! exports provided: render, staticRenderFns */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "render", function() { return render; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "staticRenderFns", function() { return staticRenderFns; });
+var render = function() {
+  var _vm = this
+  var _h = _vm.$createElement
+  var _c = _vm._self._c || _h
+  return _c(
+    "v-row",
+    [
+      _c(
+        "v-col",
+        { attrs: { cols: "12", sm: "6", md: "4" } },
+        [
+          _c(
+            "v-menu",
+            {
+              ref: "menu",
+              attrs: {
+                "close-on-content-click": false,
+                "return-value": _vm.date,
+                transition: "scale-transition",
+                "offset-y": "",
+                "min-width": "290px"
+              },
+              on: {
+                "update:returnValue": function($event) {
+                  _vm.date = $event
+                },
+                "update:return-value": function($event) {
+                  _vm.date = $event
+                }
+              },
+              scopedSlots: _vm._u([
+                {
+                  key: "activator",
+                  fn: function(ref) {
+                    var on = ref.on
+                    var attrs = ref.attrs
+                    return [
+                      _c(
+                        "v-text-field",
+                        _vm._g(
+                          _vm._b(
+                            {
+                              attrs: {
+                                label: "Picker in menu",
+                                "prepend-icon": "mdi-calendar",
+                                readonly: ""
+                              },
+                              model: {
+                                value: _vm.date,
+                                callback: function($$v) {
+                                  _vm.date = $$v
+                                },
+                                expression: "date"
+                              }
+                            },
+                            "v-text-field",
+                            attrs,
+                            false
+                          ),
+                          on
+                        )
+                      )
+                    ]
+                  }
+                }
+              ]),
+              model: {
+                value: _vm.menu,
+                callback: function($$v) {
+                  _vm.menu = $$v
+                },
+                expression: "menu"
+              }
+            },
+            [
+              _vm._v(" "),
+              _c(
+                "v-date-picker",
+                {
+                  attrs: { "no-title": "", scrollable: "" },
+                  model: {
+                    value: _vm.date,
+                    callback: function($$v) {
+                      _vm.date = $$v
+                    },
+                    expression: "date"
+                  }
+                },
+                [
+                  _c("v-spacer"),
+                  _vm._v(" "),
+                  _c(
+                    "v-btn",
+                    {
+                      attrs: { text: "", color: "primary" },
+                      on: {
+                        click: function($event) {
+                          _vm.menu = false
+                        }
+                      }
+                    },
+                    [_vm._v("\n                    Cancel\n                ")]
+                  ),
+                  _vm._v(" "),
+                  _c(
+                    "v-btn",
+                    {
+                      attrs: { text: "", color: "primary" },
+                      on: {
+                        click: function($event) {
+                          return _vm.$refs.menu.save(_vm.date)
+                        }
+                      }
+                    },
+                    [_vm._v("\n                    OK\n                ")]
+                  )
+                ],
+                1
+              )
+            ],
+            1
+          )
+        ],
+        1
+      ),
+      _vm._v(" "),
+      _c("v-spacer")
+    ],
+    1
+  )
 }
 var staticRenderFns = []
 render._withStripped = true
@@ -38453,50 +39026,54 @@ var render = function() {
   var _vm = this
   var _h = _vm.$createElement
   var _c = _vm._self._c || _h
-  return _c(
-    "div",
-    { staticClass: "container" },
-    [
-      _c(
-        "button",
-        {
-          staticClass: "btn btn-primary",
-          attrs: { type: "button" },
-          on: { click: _vm.showModal }
-        },
-        [_vm._v("Ajouter PC")]
-      ),
-      _vm._v(" "),
-      _c("AddComputer", {
-        directives: [
+  return _c("v-app", [
+    _c(
+      "div",
+      { staticClass: "container" },
+      [
+        _c("DatePicker"),
+        _vm._v(" "),
+        _c(
+          "button",
           {
-            name: "show",
-            rawName: "v-show",
-            value: _vm.isModalVisible,
-            expression: "isModalVisible"
-          }
-        ],
-        on: { close: _vm.closeModal, createElement: _vm.getCreatedElement }
-      }),
-      _vm._v(" "),
-      _c(
-        "div",
-        { staticClass: "row" },
-        _vm._l(_vm.computers, function(computer) {
-          return _c("div", { key: computer.id }, [
-            _c(
-              "div",
-              { staticClass: "col" },
-              [_c("Computer", { attrs: { computer: computer } })],
-              1
-            )
-          ])
+            staticClass: "btn btn-primary",
+            attrs: { type: "button" },
+            on: { click: _vm.showModal }
+          },
+          [_vm._v("Ajouter PC")]
+        ),
+        _vm._v(" "),
+        _c("AddComputer", {
+          directives: [
+            {
+              name: "show",
+              rawName: "v-show",
+              value: _vm.isModalVisible,
+              expression: "isModalVisible"
+            }
+          ],
+          on: { close: _vm.closeModal, createElement: _vm.getCreatedElement }
         }),
-        0
-      )
-    ],
-    1
-  )
+        _vm._v(" "),
+        _c(
+          "div",
+          { staticClass: "row" },
+          _vm._l(_vm.computers.data, function(computer) {
+            return _c("div", { key: computer.id }, [
+              _c(
+                "div",
+                { staticClass: "col" },
+                [_c("Computer", { attrs: { computer: computer } })],
+                1
+              )
+            ])
+          }),
+          0
+        )
+      ],
+      1
+    )
+  ])
 }
 var staticRenderFns = []
 render._withStripped = true
@@ -97663,6 +98240,75 @@ window.axios.defaults.headers.common['X-Requested-With'] = 'XMLHttpRequest';
 
 /***/ }),
 
+/***/ "./resources/js/components/add-attribution.vue":
+/*!*****************************************************!*\
+  !*** ./resources/js/components/add-attribution.vue ***!
+  \*****************************************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var _add_attribution_vue_vue_type_template_id_0aaf9458___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./add-attribution.vue?vue&type=template&id=0aaf9458& */ "./resources/js/components/add-attribution.vue?vue&type=template&id=0aaf9458&");
+/* harmony import */ var _add_attribution_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./add-attribution.vue?vue&type=script&lang=js& */ "./resources/js/components/add-attribution.vue?vue&type=script&lang=js&");
+/* empty/unused harmony star reexport *//* harmony import */ var _node_modules_vue_loader_lib_runtime_componentNormalizer_js__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../../../node_modules/vue-loader/lib/runtime/componentNormalizer.js */ "./node_modules/vue-loader/lib/runtime/componentNormalizer.js");
+
+
+
+
+
+/* normalize component */
+
+var component = Object(_node_modules_vue_loader_lib_runtime_componentNormalizer_js__WEBPACK_IMPORTED_MODULE_2__["default"])(
+  _add_attribution_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_1__["default"],
+  _add_attribution_vue_vue_type_template_id_0aaf9458___WEBPACK_IMPORTED_MODULE_0__["render"],
+  _add_attribution_vue_vue_type_template_id_0aaf9458___WEBPACK_IMPORTED_MODULE_0__["staticRenderFns"],
+  false,
+  null,
+  null,
+  null
+  
+)
+
+/* hot reload */
+if (false) { var api; }
+component.options.__file = "resources/js/components/add-attribution.vue"
+/* harmony default export */ __webpack_exports__["default"] = (component.exports);
+
+/***/ }),
+
+/***/ "./resources/js/components/add-attribution.vue?vue&type=script&lang=js&":
+/*!******************************************************************************!*\
+  !*** ./resources/js/components/add-attribution.vue?vue&type=script&lang=js& ***!
+  \******************************************************************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var _node_modules_babel_loader_lib_index_js_ref_4_0_node_modules_vue_loader_lib_index_js_vue_loader_options_add_attribution_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! -!../../../node_modules/babel-loader/lib??ref--4-0!../../../node_modules/vue-loader/lib??vue-loader-options!./add-attribution.vue?vue&type=script&lang=js& */ "./node_modules/babel-loader/lib/index.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/add-attribution.vue?vue&type=script&lang=js&");
+/* empty/unused harmony star reexport */ /* harmony default export */ __webpack_exports__["default"] = (_node_modules_babel_loader_lib_index_js_ref_4_0_node_modules_vue_loader_lib_index_js_vue_loader_options_add_attribution_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_0__["default"]); 
+
+/***/ }),
+
+/***/ "./resources/js/components/add-attribution.vue?vue&type=template&id=0aaf9458&":
+/*!************************************************************************************!*\
+  !*** ./resources/js/components/add-attribution.vue?vue&type=template&id=0aaf9458& ***!
+  \************************************************************************************/
+/*! exports provided: render, staticRenderFns */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_add_attribution_vue_vue_type_template_id_0aaf9458___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! -!../../../node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!../../../node_modules/vue-loader/lib??vue-loader-options!./add-attribution.vue?vue&type=template&id=0aaf9458& */ "./node_modules/vue-loader/lib/loaders/templateLoader.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/add-attribution.vue?vue&type=template&id=0aaf9458&");
+/* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "render", function() { return _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_add_attribution_vue_vue_type_template_id_0aaf9458___WEBPACK_IMPORTED_MODULE_0__["render"]; });
+
+/* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "staticRenderFns", function() { return _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_add_attribution_vue_vue_type_template_id_0aaf9458___WEBPACK_IMPORTED_MODULE_0__["staticRenderFns"]; });
+
+
+
+/***/ }),
+
 /***/ "./resources/js/components/add-computer.js?vue&type=script&lang=js&":
 /*!**************************************************************************!*\
   !*** ./resources/js/components/add-computer.js?vue&type=script&lang=js& ***!
@@ -97819,11 +98465,80 @@ __webpack_require__.r(__webpack_exports__);
 
 /***/ }),
 
+/***/ "./resources/js/components/datepicker.vue":
+/*!************************************************!*\
+  !*** ./resources/js/components/datepicker.vue ***!
+  \************************************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var _datepicker_vue_vue_type_template_id_47a6a047___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./datepicker.vue?vue&type=template&id=47a6a047& */ "./resources/js/components/datepicker.vue?vue&type=template&id=47a6a047&");
+/* harmony import */ var _datepicker_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./datepicker.vue?vue&type=script&lang=js& */ "./resources/js/components/datepicker.vue?vue&type=script&lang=js&");
+/* empty/unused harmony star reexport *//* harmony import */ var _node_modules_vue_loader_lib_runtime_componentNormalizer_js__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../../../node_modules/vue-loader/lib/runtime/componentNormalizer.js */ "./node_modules/vue-loader/lib/runtime/componentNormalizer.js");
+
+
+
+
+
+/* normalize component */
+
+var component = Object(_node_modules_vue_loader_lib_runtime_componentNormalizer_js__WEBPACK_IMPORTED_MODULE_2__["default"])(
+  _datepicker_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_1__["default"],
+  _datepicker_vue_vue_type_template_id_47a6a047___WEBPACK_IMPORTED_MODULE_0__["render"],
+  _datepicker_vue_vue_type_template_id_47a6a047___WEBPACK_IMPORTED_MODULE_0__["staticRenderFns"],
+  false,
+  null,
+  null,
+  null
+  
+)
+
+/* hot reload */
+if (false) { var api; }
+component.options.__file = "resources/js/components/datepicker.vue"
+/* harmony default export */ __webpack_exports__["default"] = (component.exports);
+
+/***/ }),
+
+/***/ "./resources/js/components/datepicker.vue?vue&type=script&lang=js&":
+/*!*************************************************************************!*\
+  !*** ./resources/js/components/datepicker.vue?vue&type=script&lang=js& ***!
+  \*************************************************************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var _node_modules_babel_loader_lib_index_js_ref_4_0_node_modules_vue_loader_lib_index_js_vue_loader_options_datepicker_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! -!../../../node_modules/babel-loader/lib??ref--4-0!../../../node_modules/vue-loader/lib??vue-loader-options!./datepicker.vue?vue&type=script&lang=js& */ "./node_modules/babel-loader/lib/index.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/datepicker.vue?vue&type=script&lang=js&");
+/* empty/unused harmony star reexport */ /* harmony default export */ __webpack_exports__["default"] = (_node_modules_babel_loader_lib_index_js_ref_4_0_node_modules_vue_loader_lib_index_js_vue_loader_options_datepicker_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_0__["default"]); 
+
+/***/ }),
+
+/***/ "./resources/js/components/datepicker.vue?vue&type=template&id=47a6a047&":
+/*!*******************************************************************************!*\
+  !*** ./resources/js/components/datepicker.vue?vue&type=template&id=47a6a047& ***!
+  \*******************************************************************************/
+/*! exports provided: render, staticRenderFns */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_datepicker_vue_vue_type_template_id_47a6a047___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! -!../../../node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!../../../node_modules/vue-loader/lib??vue-loader-options!./datepicker.vue?vue&type=template&id=47a6a047& */ "./node_modules/vue-loader/lib/loaders/templateLoader.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/datepicker.vue?vue&type=template&id=47a6a047&");
+/* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "render", function() { return _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_datepicker_vue_vue_type_template_id_47a6a047___WEBPACK_IMPORTED_MODULE_0__["render"]; });
+
+/* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "staticRenderFns", function() { return _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_datepicker_vue_vue_type_template_id_47a6a047___WEBPACK_IMPORTED_MODULE_0__["staticRenderFns"]; });
+
+
+
+/***/ }),
+
 /***/ "./resources/js/components/home.js?vue&type=script&lang=js&":
 /*!******************************************************************!*\
   !*** ./resources/js/components/home.js?vue&type=script&lang=js& ***!
   \******************************************************************/
-/*! no static exports found */
+/*! exports provided: default */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -97837,15 +98552,14 @@ __webpack_require__.r(__webpack_exports__);
 /*!******************************************!*\
   !*** ./resources/js/components/home.vue ***!
   \******************************************/
-/*! no static exports found */
+/*! exports provided: default */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _home_vue_vue_type_template_id_fa6affac___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./home.vue?vue&type=template&id=fa6affac& */ "./resources/js/components/home.vue?vue&type=template&id=fa6affac&");
 /* harmony import */ var _home_js_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./home.js?vue&type=script&lang=js& */ "./resources/js/components/home.js?vue&type=script&lang=js&");
-/* harmony reexport (unknown) */ for(var __WEBPACK_IMPORT_KEY__ in _home_js_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_1__) if(["default"].indexOf(__WEBPACK_IMPORT_KEY__) < 0) (function(key) { __webpack_require__.d(__webpack_exports__, key, function() { return _home_js_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_1__[key]; }) }(__WEBPACK_IMPORT_KEY__));
-/* harmony import */ var _home_vue_vue_type_style_index_0_lang_css___WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./home.vue?vue&type=style&index=0&lang=css& */ "./resources/js/components/home.vue?vue&type=style&index=0&lang=css&");
+/* empty/unused harmony star reexport *//* harmony import */ var _home_vue_vue_type_style_index_0_lang_css___WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./home.vue?vue&type=style&index=0&lang=css& */ "./resources/js/components/home.vue?vue&type=style&index=0&lang=css&");
 /* harmony import */ var _node_modules_vue_loader_lib_runtime_componentNormalizer_js__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ../../../node_modules/vue-loader/lib/runtime/componentNormalizer.js */ "./node_modules/vue-loader/lib/runtime/componentNormalizer.js");
 
 

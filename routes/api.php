@@ -19,4 +19,8 @@ Route::middleware('auth:api')->get('/user', function (Request $request) {
 });
 
 Route::get('/computers', 'ComputerController@index')->middleware('throttle:240,1');
+Route::get('/customer/search', 'CustomerController@index');
 Route::post('/computer/create', 'ComputerController@add');
+Route::get('/attributions', 'AttributionController@index');
+Route::post('/attributions/create', 'AttributionController@add');
+

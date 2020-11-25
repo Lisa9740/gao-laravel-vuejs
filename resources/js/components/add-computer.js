@@ -4,7 +4,6 @@ export default {
     data() {
         return{
             name: '',
-
         }
     },
     methods: {
@@ -16,7 +15,6 @@ export default {
                 name : this.name,
             }).then(response => {
                 this.$emit('createElement', response)
-
             })
 
         },
