@@ -12,3 +12,7 @@
     php artisan db:seed --class=DatabaseSeeder
     php artisan serve
     npm run watch
+
+# TODO 
+    - refaire le front 
+    - faire une recette des fonctionnalitès
